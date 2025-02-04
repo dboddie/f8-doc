@@ -15,7 +15,7 @@ jobs:
       - name: Get dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y texlive-latex-recommended texlive-science
+          sudo apt-get install -y texlive-latex-recommended texlive-latex-extra texlive-science
       - name: Build the manual
         run: |
           pdflatex manual.tex
