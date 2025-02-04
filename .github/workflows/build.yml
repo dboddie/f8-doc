@@ -17,7 +17,9 @@ jobs:
           sudo apt-get install -y texlive-science
       - name: Build the manual
         run: |
+          ls
           cd $GITHUB_WORKSPACE
+          ls
           pdflatex manual.tex
           pdflatex manual.tex
 
