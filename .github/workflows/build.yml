@@ -20,11 +20,11 @@ jobs:
         run: |
           pdflatex manual.tex
           pdflatex manual.tex
+          mkdir -p _site
+          cp manual.pdf _site/
 
       - name: Upload GitHub Pages artifacts
         uses: actions/upload-pages-artifact@v3
-        with:
-          path: manual.pdf
 
   deploy:
     needs: build
