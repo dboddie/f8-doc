@@ -24,7 +24,7 @@ jobs:
           cp manual.pdf _site/
 
       - name: Upload GitHub Pages artifacts
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v2
 
   deploy:
     needs: build
@@ -36,4 +36,4 @@ jobs:
     steps:
       - name: Deploy GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v2
