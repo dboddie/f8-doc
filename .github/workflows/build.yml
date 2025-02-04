@@ -1,0 +1,42 @@
+name: build-manual
+run-name: Build manual
+on: [push, workflow_dispatch]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  clone-and-build-repo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive-science
+      - name: Build the manual
+        run: |
+          cd $GITHUB_WORKSPACE
+          pdflatex manual.tex
+          pdflatex manual.tex
+      - name: Archive the build product
+        uses: actions/upload-artifact@v3
+        with:
+          name: Manual
+          path: |
+            manual.pdf
+      - name: Upload GitHub Pages artifacts
+        uses: actions/upload-pages-artifact@v2
+
+  deploy:
+    needs: make-pages
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
