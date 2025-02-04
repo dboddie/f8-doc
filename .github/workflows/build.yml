@@ -11,20 +11,17 @@ jobs:
   build-manual:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - name: Get dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y texlive-science
       - name: Build the manual
         run: |
-          ls
-          cd $GITHUB_WORKSPACE
-          ls
           pdflatex manual.tex
           pdflatex manual.tex
 
       - name: Upload GitHub Pages artifacts
-        id: deployment
         uses: actions/upload-pages-artifact@v3
         with:
           path: manual.pdf
