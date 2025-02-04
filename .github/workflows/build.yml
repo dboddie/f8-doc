@@ -8,7 +8,7 @@ permissions:
   id-token: write
 
 jobs:
-  clone-and-build-repo:
+  build-manual:
     runs-on: ubuntu-latest
     steps:
       - name: Get dependencies
@@ -20,17 +20,15 @@ jobs:
           cd $GITHUB_WORKSPACE
           pdflatex manual.tex
           pdflatex manual.tex
-      - name: Archive the build product
-        uses: actions/upload-artifact@v3
-        with:
-          name: Manual
-          path: |
-            manual.pdf
+
       - name: Upload GitHub Pages artifacts
-        uses: actions/upload-pages-artifact@v2
+        id: deployment
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: manual.pdf
 
   deploy:
-    needs: make-pages
+    needs: build-manual
     runs-on: ubuntu-latest
 
     environment:
@@ -39,4 +37,4 @@ jobs:
     steps:
       - name: Deploy GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
