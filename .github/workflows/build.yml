@@ -8,14 +8,14 @@ permissions:
   id-token: write
 
 jobs:
-  build-manual:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Get dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y texlive-science
+          sudo apt-get install -y texlive-latex-recommended texlive-science
       - name: Build the manual
         run: |
           pdflatex manual.tex
@@ -27,7 +27,7 @@ jobs:
           path: manual.pdf
 
   deploy:
-    needs: build-manual
+    needs: build
     runs-on: ubuntu-latest
 
     environment:
